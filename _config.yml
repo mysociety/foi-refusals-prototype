@@ -1,0 +1,15 @@
+title: "WhatDoTheyKnow refusal challenges prototype"
+
+host: 0.0.0.0
+
+markdown: kramdown
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+
+sass:
+  load_paths:
+    - _sass
+    - vendor

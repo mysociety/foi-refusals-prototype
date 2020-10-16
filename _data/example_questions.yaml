@@ -1,0 +1,46 @@
+- id: "first-top-level"
+  label: "This is the first top level question, do you agree?"
+  options:
+  - label: "Yes"
+    value: "yes"
+  - label: "No"
+    value: "no"
+
+- id: "conditional-example"
+  show_if:
+  - id: "first-top-level"
+    operator: "is"
+    value: "yes"
+  label: "This question only appears if you selected yes to the top level question, neat huh?"
+  options:
+  - label: "Absolutely"
+    value: "yes"
+  - label: "Not really"
+    value: "no"
+
+- id: "first-recommendation"
+  show_if:
+  - id: "conditional-example"
+    operator: "is"
+    value: "yes"
+  label: "You need to get out more. There is nothing we can do for you."
+
+- id: "second-recommendation"
+  show_if:
+  - id: "conditional-example"
+    operator: "is"
+    value: "no"
+  label: "Since there was ambiguity over the neatness of the message, you have grounds to appeal under Section 14(1) of the Boring Act 2014."
+  next_steps:
+  - type: "internal_review"
+    response_template: "path/to/template/internal_review"
+
+- id: "fallback"
+  show_if:
+  - id: "first-top-level"
+    operator: "is"
+    value: "no"
+  label: "Since you don‘t agree that the top level question was a top level question, we’d recommend you send a reply to the authority seeking further clarification."
+  next_steps:
+  - type: "reply"
+    response_template: "path/to/template/generic_reply"
