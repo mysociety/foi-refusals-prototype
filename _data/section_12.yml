@@ -1,0 +1,138 @@
+- id: have-confirmation
+  label: "Has the authority confirmed or denied whether they hold the information you have requested?"
+  options:
+  - label: "Yes"
+    value: "yes"
+  - label: "No"
+    value: "no"
+
+- id: is-confirmation-too-costly
+  show_if:
+  - id: have-confirmation
+    operator: is
+    value: "no"
+  label: "Have they stated that the cost of confirming or denying would exceed the appropriate limit?"
+  options:
+  - label: "Yes"
+    value: "yes"
+  - label: "No"
+    value: "no"
+
+- id: confirmation-not-too-costly
+  show_if:
+  - id: is-confirmation-too-costly
+    operator: is
+    value: "no"
+  label: >
+    <a href="https://www.legislation.gov.uk/ukpga/2000/36/section/1">Section 1(1) of the FOI Act</a> requires that an authority informs you "whether it holds information of the description specified in the request". If they have not confirmed or denied whether they hold the information, and if they have not cited the cost limit as the reason, reply to the authority, requesting clarification on this point.
+  next_steps:
+  - type: reply
+    response_template: "give-me-a-confirmation-or-an-excuse"
+
+- id: have-calculation
+  show_if:
+  - id: have-confirmation
+    operator: is
+    value: "yes"
+  label: "Has the body included a calculation or explanation of the costs involved in providing the information?"
+  options:
+  - label: "Yes"
+    value: "yes"
+  - label: "No"
+    value: "no"
+
+- id: no-calculation
+  show_if:
+  - id: have-calculation
+    operator: is
+    value: "no"
+  label: >
+    It’s not a requirement, but it is considered good practice by the ICO to provide 'arguments or evidence' for cost calculations. Note that the FOI Act states that it is "the duty of a public authority to provide advice and assistance, so far as it would be reasonable to expect the authority to do so". You could reply to the authority quoting this guidance and asking for more detail.
+  next_steps:
+  - type: reply
+    response_template: "give-me-a-cost-calculation"
+
+- id: does-calculation-include-wrong-things
+  show_if:
+  - id: have-calculation
+    operator: is
+    value: "yes"
+  label: "Does this calculation include the time taken in considering when exemptions apply, or time taken to redact parts of the information?"
+  options:
+  - label: "Yes"
+    value: "yes"
+  - label: "No"
+    value: "no"
+
+- id: yes-calculation-includes-wrong-things
+  show_if:
+  - id: does-calculation-include-wrong-things
+    operator: is
+    value: "yes"
+  label: >
+    Ask for an internal review. Inform the authority that this should not be part of the calculation, <a href="https://ico.org.uk/media/for-organisations/documents/1199/costs_of_compliance_exceeds_appropriate_limit.pdf">linking to ICO advice (PDF)</a>.
+  next_steps:
+  - type: internal_review
+    response_template: "your-cost-calculation-includes-wrong-things"
+
+- id: is-calculation-reasonable
+  show_if:
+  - id: have-calculation
+    operator: is
+    value: "yes"
+  label: "Does it seem to be a reasonable estimate ('sensible and realistic') that gathering the information you have requested (or checking whether they hold this information) will take more than 24 hours of staff time (where the request was made to central government, a legislative body, or the armed forces) or 18 hours (all other public authorities), or otherwise cost more than £600/400 to locate, retrieve and extract?"
+  hint: "As well as staff time, reasonable costs may include the necessity of buying new equipment or software; travel required to retrieve the information, etc."
+  options:
+  - label: "Yes"
+    value: "yes"
+  - label: "No"
+    value: "no"
+
+- id: no-calculation-is-not-reasonable
+  show_if:
+  - id: is-calculation-reasonable
+    operator: is
+    value: "no"
+  label: >
+    If you feel their calculation is unreasonable, you could ask for an internal review to challenge the calculation.
+  next_steps:
+  - type: internal_review
+    response_template: "your-cost-calculation-is-unreasonable"
+
+- id: yes-calculation-is-reasonable-1
+  show_if:
+  - id: is-calculation-reasonable
+    operator: is
+    value: "yes"
+  label: >
+    Consider reducing the scope of your request or breaking your request into smaller parts; getting someone else to make the other parts (but do not be seen to be working together as a 'campaign'), or waiting 60 working days between requests.
+
+- id: yes-calculation-is-reasonable-2
+  show_if:
+  - id: is-calculation-reasonable
+    operator: is
+    value: "yes"
+  label: >
+    If the authority has described how they intend to conduct the search, and you think there is a cheaper way of doing so which they have not considered, you can reply to suggest it (for example, a more refined search term to use across electronic files).
+  next_steps:
+  - type: reply
+    response_template: "i-know-a-cheaper-way"
+
+- id: has-indicated-what-could-be-provided
+  label: "Has the body given an indication of what information could be provided within the appropriate limit?"
+  options:
+  - label: "Yes"
+    value: "yes"
+  - label: "No"
+    value: "no"
+
+- id: no-indication-of-what-could-be-provided
+  show_if:
+  - id: has-indicated-what-could-be-provided
+    operator: is
+    value: "no"
+  label: >
+    Section 16 of the FOI Code of Practice advises that bodies should 'provide advice and assistance, so far as it would be reasonable to expect the authority to do so' and the ICO guidance interprets this as providing suggestions of this nature. You could respond to authority asking for such advice.
+  next_steps:
+  - type: reply
+    response_template: "tell-me-what-could-be-provided"
