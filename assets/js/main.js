@@ -26,10 +26,11 @@ var showOrHideDependentQuestions = function (id, value) {
         }
 
         // Show or hide this question.
-        $this_question.toggleClass( 'd-none', ! show_this_question );
-
-        // If hidden, reset any selections.
-        if ( ! show_this_question ) {
+        // And if hidden, reset any selections.
+        if ( show_this_question ) {
+            $this_question.collapse('show');
+        } else {
+            $this_question.collapse('hide');
             $options.prop('checked', false);
         }
 
