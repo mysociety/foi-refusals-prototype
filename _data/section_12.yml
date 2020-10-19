@@ -136,3 +136,163 @@
   next_steps:
   - type: reply
     response_template: "tell-me-what-could-be-provided"
+
+- id: does-calculation-include-multiple-requests
+  label: >
+    Have you put in more than one request to the same authority within 60 working days, and if so, have they all been included in the calculation of costs?
+  options:
+  - label: "Yes"
+    value: "yes"
+  - label: "No"
+    value: "no"
+
+- id: yes-calculation-includes-multiple-requests
+  show_if:
+  - id: does-calculation-include-multiple-requests
+    operator: is
+    value: "yes"
+  label: >
+    Are they all FOI requests, or do any of them fall under a different regime, eg Environmental Information Regulations (EIR) or Subject Access?
+  options:
+  - label: "Yes, they are all FOI requests"
+    value: "yes"
+  - label: "No, the calculation includes non-FOI requests"
+    value: "no"
+
+- id: calculation-includes-non-foi-requests
+  show_if:
+  - id: yes-calculation-includes-multiple-requests
+    operator: is
+    value: "no"
+  label: >
+    Authorities may not aggregate requests unless they are all made within the same regime. Ask for an internal review, stating that they are not all FOI requests.
+  next_steps:
+  - type: internal_review
+    response_template: "your-cost-calculation-includes-non-foi-requests"
+
+- id: is-each-request-different
+  show_if:
+  - id: does-calculation-include-multiple-requests
+    operator: is
+    value: "yes"
+  label: >
+    Is each request on a demonstrably different subject?
+  hint: >
+    Note that “multiple requests within a single item of correspondence are separate requests for the purpose of section 12”.
+  options:
+  - label: "Yes, the requests are about different subjects"
+    value: "yes"
+  - label: "No, the requests are about the same subject"
+    value: "no"
+
+- id: calculation-includes-unrelated-requests
+  show_if:
+  - id: is-each-request-different
+    operator: is
+    value: "yes"
+  label: >
+    Authorities are advised that requests may only be aggregated if they relate “to any extent” to the same or similar information. This is a wide description which you may be able to argue against. Ask for an internal review, <a href="https://ico.org.uk/media/for-organisations/documents/1199/costs_of_compliance_exceeds_appropriate_limit.pdf">linking to ICO advice (PDF)</a>.
+  next_steps:
+  - type: internal_review
+    response_template: "your-cost-calculation-includes-unrelated-requests"
+
+- id: general-aggregation-argument
+  show_if:
+  - id: does-calculation-include-multiple-requests
+    operator: is
+    value: "yes"
+  label: >
+    You may be able to argue against aggregation on the basis that by law, authorities must respond to requests within 20 working days. The ICO allow "the aggregation period to only run up to 20 days ‘forward’ from the date of any single request under consideration" and "up to 20 days ‘backwards’ from the date of any single request under consideration" and "the total aggregation period (running either forwards or backwards or a combination of both) from the date of any single request must not exceed 60 working days". If the authority has included requests outside these timescales, then you should ask for an internal review, <a href="https://ico.org.uk/media/for-organisations/documents/1199/costs_of_compliance_exceeds_appropriate_limit.pdf">linking to ICO advice (PDF)</a>.
+  next_steps:
+  - type: internal_review
+    response_template: "your-cost-calculation-aggregates-requests-over-too-long-a-period"
+
+- id: does-calculation-include-other-peoples-requests
+  label: >
+    Does the calculation of costs include anyone else’s requests on a similar subject?
+  options:
+  - label: "Yes"
+    value: "yes"
+  - label: "No"
+    value: "no"
+
+- id: are-you-related-to-the-other-people
+  show_if:
+  - id: does-calculation-include-other-peoples-requests
+    operator: is
+    value: "yes"
+  label: >
+    Are you connected to the other person or people “in concert or in pursuance of a campaign”?
+  options:
+  - label: "Yes"
+    value: "yes"
+  - label: "No"
+    value: "no"
+
+- id: no-not-related-to-other-people
+  show_if:
+  - id: are-you-related-to-the-other-people
+    operator: is
+    value: "no"
+  label: >
+    Ask for an internal review, stating that you are unrelated to other people who have made similar requests, and therefore their requests should not be included in your cost calculation.
+  next_steps:
+  - type: internal_review
+    response_template: "your-cost-calculation-aggregates-requests-from-unrelated-people"
+
+- id: yes-related-to-other-people
+  show_if:
+  - id: are-you-related-to-the-other-people
+    operator: is
+    value: "yes"
+  label: >
+    Were their requests made to the same authority within 60 working days of yours?
+  options:
+  - label: "Yes"
+    value: "yes"
+  - label: "No"
+    value: "no"
+
+- id: related-to-other-people-but-not-same-time-period
+  show_if:
+  - id: yes-related-to-other-people
+    operator: is
+    value: "no"
+  label: >
+    Ask for an internal review, <a href="https://ico.org.uk/media/for-organisations/documents/1199/costs_of_compliance_exceeds_appropriate_limit.pdf">linking to ICO advice (PDF)</a> which states that requests may not be aggregated if they were made more than 60 working days apart.
+  next_steps:
+  - type: internal_review
+    response_template: "your-cost-calculation-aggregates-requests-from-related-people-over-too-long-a-period"
+
+- id: has-search-already-begun
+  label: >
+    Has the authority begun the search before realising that it will cost more than the appropriate limit to complete it?
+  options:
+  - label: "Yes"
+    value: "yes"
+  - label: "No"
+    value: "no"
+
+- id: have-they-already-provided-information
+  show_if:
+  - id: has-search-already-begun
+    operator: is
+    value: "yes"
+  label: >
+    Have they already provided the information they’ve collected so far?
+  options:
+  - label: "Yes"
+    value: "yes"
+  - label: "No"
+    value: "no"
+
+- id: yes-they-have-provided-information
+  show_if:
+  - id: have-they-already-provided-information
+    operator: is
+    value: "yes"
+  label: >
+    Refusing a request on cost grounds, but not giving you a chance to identify what information you’d like within the cost limit, is considered bad practice by the ICO, who state that the requester should be able to define which part of the information they would like to receive. Send a reply, asking for the specific information you’d prefer, and <a href="https://ico.org.uk/media/for-organisations/documents/1199/costs_of_compliance_exceeds_appropriate_limit.pdf">linking to ICO advice (PDF)</a>.
+  next_steps:
+  - type: reply
+    response_template: "i-only-need-some-of-the-information"
