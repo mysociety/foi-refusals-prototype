@@ -13,3 +13,10 @@
         margin: 1rem 0;
     }
 }
+
+.default-suggestion {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    border-top: $border-width solid $border-color;
+}

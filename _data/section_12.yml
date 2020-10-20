@@ -1,5 +1,6 @@
 - id: have-confirmation
-  label: "Has the authority confirmed or denied whether they hold the information you have requested?"
+  label: >
+    Has the authority confirmed or denied whether they hold the information you have requested?
   options:
   - label: "Yes"
     value: "yes"
@@ -11,7 +12,8 @@
   - id: have-confirmation
     operator: is
     value: "no"
-  label: "Have they stated that the cost of confirming or denying would exceed the appropriate limit?"
+  label: >
+    Have they stated that the cost of confirming or denying would exceed the appropriate limit?
   options:
   - label: "Yes"
     value: "yes"
@@ -25,8 +27,8 @@
     value: "no"
   label: >
     <a href="https://www.legislation.gov.uk/ukpga/2000/36/section/1">Section 1(1) of the FOI Act</a> requires that an authority informs you "whether it holds information of the description specified in the request". If they have not confirmed or denied whether they hold the information, and if they have not cited the cost limit as the reason, reply to the authority, requesting clarification on this point.
-  next_steps:
-  - type: reply
+  suggestion:
+    type: reply
     response_template: "give-me-a-confirmation-or-an-excuse"
 
 - id: have-calculation
@@ -34,7 +36,8 @@
   - id: have-confirmation
     operator: is
     value: "yes"
-  label: "Has the body included a calculation or explanation of the costs involved in providing the information?"
+  label: >
+    Has the body included a calculation or explanation of the costs involved in providing the information?
   options:
   - label: "Yes"
     value: "yes"
@@ -48,8 +51,8 @@
     value: "no"
   label: >
     It’s not a requirement, but it is considered good practice by the ICO to provide 'arguments or evidence' for cost calculations. Note that the FOI Act states that it is "the duty of a public authority to provide advice and assistance, so far as it would be reasonable to expect the authority to do so". You could reply to the authority quoting this guidance and asking for more detail.
-  next_steps:
-  - type: reply
+  suggestion:
+    type: reply
     response_template: "give-me-a-cost-calculation"
 
 - id: does-calculation-include-wrong-things
@@ -57,7 +60,8 @@
   - id: have-calculation
     operator: is
     value: "yes"
-  label: "Does this calculation include the time taken in considering when exemptions apply, or time taken to redact parts of the information?"
+  label: >
+    Does this calculation include the time taken in considering when exemptions apply, or time taken to redact parts of the information?
   options:
   - label: "Yes"
     value: "yes"
@@ -71,8 +75,8 @@
     value: "yes"
   label: >
     Ask for an internal review. Inform the authority that this should not be part of the calculation, <a href="https://ico.org.uk/media/for-organisations/documents/1199/costs_of_compliance_exceeds_appropriate_limit.pdf">linking to ICO advice (PDF)</a>.
-  next_steps:
-  - type: internal_review
+  suggestion:
+    type: internal_review
     response_template: "your-cost-calculation-includes-wrong-things"
 
 - id: is-calculation-reasonable
@@ -80,8 +84,10 @@
   - id: have-calculation
     operator: is
     value: "yes"
-  label: "Does it seem to be a reasonable estimate ('sensible and realistic') that gathering the information you have requested (or checking whether they hold this information) will take more than 24 hours of staff time (where the request was made to central government, a legislative body, or the armed forces) or 18 hours (all other public authorities), or otherwise cost more than £600/400 to locate, retrieve and extract?"
-  hint: "As well as staff time, reasonable costs may include the necessity of buying new equipment or software; travel required to retrieve the information, etc."
+  label: >
+    Does it seem to be a reasonable estimate ('sensible and realistic') that gathering the information you have requested (or checking whether they hold this information) will take more than 24 hours of staff time (where the request was made to central government, a legislative body, or the armed forces) or 18 hours (all other public authorities), or otherwise cost more than £600/400 to locate, retrieve and extract?
+  hint: >
+    As well as staff time, reasonable costs may include the necessity of buying new equipment or software; travel required to retrieve the information, etc.
   options:
   - label: "Yes"
     value: "yes"
@@ -95,8 +101,8 @@
     value: "no"
   label: >
     If you feel their calculation is unreasonable, you could ask for an internal review to challenge the calculation.
-  next_steps:
-  - type: internal_review
+  suggestion:
+    type: internal_review
     response_template: "your-cost-calculation-is-unreasonable"
 
 - id: yes-calculation-is-reasonable-1
@@ -106,6 +112,8 @@
     value: "yes"
   label: >
     Consider reducing the scope of your request or breaking your request into smaller parts; getting someone else to make the other parts (but do not be seen to be working together as a 'campaign'), or waiting 60 working days between requests.
+  suggestion:
+    type: other
 
 - id: yes-calculation-is-reasonable-2
   show_if:
@@ -114,12 +122,13 @@
     value: "yes"
   label: >
     If the authority has described how they intend to conduct the search, and you think there is a cheaper way of doing so which they have not considered, you can reply to suggest it (for example, a more refined search term to use across electronic files).
-  next_steps:
-  - type: reply
+  suggestion:
+    type: reply
     response_template: "i-know-a-cheaper-way"
 
 - id: has-indicated-what-could-be-provided
-  label: "Has the body given an indication of what information could be provided within the appropriate limit?"
+  label: >
+    Has the body given an indication of what information could be provided within the appropriate limit?
   options:
   - label: "Yes"
     value: "yes"
@@ -133,8 +142,8 @@
     value: "no"
   label: >
     Section 16 of the FOI Code of Practice advises that bodies should 'provide advice and assistance, so far as it would be reasonable to expect the authority to do so' and the ICO guidance interprets this as providing suggestions of this nature. You could respond to authority asking for such advice.
-  next_steps:
-  - type: reply
+  suggestion:
+    type: reply
     response_template: "tell-me-what-could-be-provided"
 
 - id: does-calculation-include-multiple-requests
@@ -166,8 +175,8 @@
     value: "no"
   label: >
     Authorities may not aggregate requests unless they are all made within the same regime. Ask for an internal review, stating that they are not all FOI requests.
-  next_steps:
-  - type: internal_review
+  suggestion:
+    type: internal_review
     response_template: "your-cost-calculation-includes-non-foi-requests"
 
 - id: is-each-request-different
@@ -192,8 +201,8 @@
     value: "yes"
   label: >
     Authorities are advised that requests may only be aggregated if they relate “to any extent” to the same or similar information. This is a wide description which you may be able to argue against. Ask for an internal review, <a href="https://ico.org.uk/media/for-organisations/documents/1199/costs_of_compliance_exceeds_appropriate_limit.pdf">linking to ICO advice (PDF)</a>.
-  next_steps:
-  - type: internal_review
+  suggestion:
+    type: internal_review
     response_template: "your-cost-calculation-includes-unrelated-requests"
 
 - id: general-aggregation-argument
@@ -203,8 +212,8 @@
     value: "yes"
   label: >
     You may be able to argue against aggregation on the basis that by law, authorities must respond to requests within 20 working days. The ICO allow "the aggregation period to only run up to 20 days ‘forward’ from the date of any single request under consideration" and "up to 20 days ‘backwards’ from the date of any single request under consideration" and "the total aggregation period (running either forwards or backwards or a combination of both) from the date of any single request must not exceed 60 working days". If the authority has included requests outside these timescales, then you should ask for an internal review, <a href="https://ico.org.uk/media/for-organisations/documents/1199/costs_of_compliance_exceeds_appropriate_limit.pdf">linking to ICO advice (PDF)</a>.
-  next_steps:
-  - type: internal_review
+  suggestion:
+    type: internal_review
     response_template: "your-cost-calculation-aggregates-requests-over-too-long-a-period"
 
 - id: does-calculation-include-other-peoples-requests
@@ -236,8 +245,8 @@
     value: "no"
   label: >
     Ask for an internal review, stating that you are unrelated to other people who have made similar requests, and therefore their requests should not be included in your cost calculation.
-  next_steps:
-  - type: internal_review
+  suggestion:
+    type: internal_review
     response_template: "your-cost-calculation-aggregates-requests-from-unrelated-people"
 
 - id: yes-related-to-other-people
@@ -260,8 +269,8 @@
     value: "no"
   label: >
     Ask for an internal review, <a href="https://ico.org.uk/media/for-organisations/documents/1199/costs_of_compliance_exceeds_appropriate_limit.pdf">linking to ICO advice (PDF)</a> which states that requests may not be aggregated if they were made more than 60 working days apart.
-  next_steps:
-  - type: internal_review
+  suggestion:
+    type: internal_review
     response_template: "your-cost-calculation-aggregates-requests-from-related-people-over-too-long-a-period"
 
 - id: has-search-already-begun
@@ -293,6 +302,6 @@
     value: "yes"
   label: >
     Refusing a request on cost grounds, but not giving you a chance to identify what information you’d like within the cost limit, is considered bad practice by the ICO, who state that the requester should be able to define which part of the information they would like to receive. Send a reply, asking for the specific information you’d prefer, and <a href="https://ico.org.uk/media/for-organisations/documents/1199/costs_of_compliance_exceeds_appropriate_limit.pdf">linking to ICO advice (PDF)</a>.
-  next_steps:
-  - type: reply
+  suggestion:
+    type: reply
     response_template: "i-only-need-some-of-the-information"

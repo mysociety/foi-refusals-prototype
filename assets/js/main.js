@@ -2,48 +2,88 @@ var setUpRefusalsWizard = function () {
     var $form = $(this);
 
     $('input', $form).on('change', function () {
-        showOrHideDependentQuestions(
+        showOrHideDependents(
             $(this).attr('name'),
             $(this).val()
         );
     });
 };
 
-var showOrHideDependentQuestions = function (id, value) {
-    var dependent_questions = $('[data-showif-id="' + id + '"]');
+var showOrHideDependents = function (id, value) {
+    var dependents = $('[data-showif-id="' + id + '"]');
 
-    dependent_questions.each(function () {
-        var $this_question = $(this);
-        var show_this_question = false;
-        var showif_operator = $this_question.attr('data-showif-operator');
-        var showif_value = $this_question.attr('data-showif-value');
-        var $options = $this_question.find('input[type="radio"]');
+    dependents.each(function () {
+        var $dependent = $(this);
+        var show = false;
+        var showif_operator = $dependent.attr('data-showif-operator');
+        var showif_value = $dependent.attr('data-showif-value');
+        var suggestion_type = $dependent.attr('data-suggestion-type');
 
+        // Work out whether to show or hide.
         if ( showif_operator === 'is' ) {
-            show_this_question = ( value === showif_value );
+            show = ( value === showif_value );
         } else if ( showif_operator === 'is not' ) {
-            show_this_question = ( value !== showif_value );
+            show = ( value !== showif_value );
         }
 
-        // Show or hide this question.
-        // And if hidden, reset any selections.
-        if ( show_this_question ) {
-            $this_question.collapse('show');
+        // Work out whether this is a question or a next step.
+        if ( suggestion_type ) {
+            showOrHidesuggestion( $dependent, show );
         } else {
-            $this_question.collapse('hide');
-            $options.prop('checked', false);
-        }
-
-        // Recurse through dependencies, updating visibility and selections.
-        if ( $options.length ) {
-            var option_value = $options.filter(':selected').val() || null;
-            showOrHideDependentQuestions(
-                $this_question.attr('data-question-id'),
-                option_value
-            );
+            showOrHideQuestion( $dependent, show );
         }
     });
 };
+
+var showOrHideQuestion = function ( $question, show ) {
+    var $options = $question.find('input[type="radio"]');
+
+    if ( show ) {
+        $question.collapse('show');
+    } else {
+        $question.collapse('hide');
+        $options.prop('checked', false);
+    }
+
+    // Recurse through dependencies, updating visibility and selections.
+    if ( $options.length ) {
+        var option_value = $options.filter(':selected').val() || null;
+        showOrHideDependents(
+            $question.attr('data-question-id'),
+            option_value
+        );
+    }
+}
+
+var showOrHidesuggestion = function ( $suggestion, show ) {
+    // Next steps are a little more complicated than regular questions,
+    // as they are collected in groups by type, and the entire group
+    // needs to be shown/hidden based on the number of visible next steps.
+    var suggestion_type = $suggestion.attr('data-suggestion-type');
+    var $parent = $suggestion.parent();
+    var $visiblesiblings = $suggestion.siblings('.js-refusals-wizard-suggestion.show');
+
+    if ( show ) {
+        var $input = $('<input>').attr({
+            type: 'hidden',
+            name: 'response_template[]',
+            value: $suggestion.attr('data-suggestion-reponse-template')
+        });
+        $input.appendTo( $suggestion );
+        if ( $visiblesiblings.length === 0 ) {
+            $parent.collapse('show');
+            $('.js-default-suggestion[data-suggestion-type="' + suggestion_type + '"]').collapse('hide');
+        }
+        $suggestion.collapse('show');
+    } else {
+        $suggestion.find('input[type="hidden"]').remove();
+        if ( $visiblesiblings.length === 0 ) {
+            $parent.collapse('hide');
+            $('.js-default-suggestion[data-suggestion-type="' + suggestion_type + '"]').collapse('show');
+        }
+        $suggestion.collapse('hide');
+    }
+}
 
 $(function () {
     $('.js-refusals-wizard').each(setUpRefusalsWizard);

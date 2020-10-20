@@ -31,8 +31,8 @@
     operator: "is"
     value: "no"
   label: "Since there was ambiguity over the neatness of the message, you have grounds to appeal under Section 14(1) of the Boring Act 2014."
-  next_steps:
-  - type: "internal_review"
+  suggestion:
+    type: "internal_review"
     response_template: "path/to/template/internal_review"
 
 - id: "fallback"
@@ -41,6 +41,6 @@
     operator: "is"
     value: "no"
   label: "Since you don‘t agree that the top level question was a top level question, we’d recommend you send a reply to the authority seeking further clarification."
-  next_steps:
-  - type: "reply"
+  suggestion:
+    type: "reply"
     response_template: "path/to/template/generic_reply"
