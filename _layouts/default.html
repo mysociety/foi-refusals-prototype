@@ -13,6 +13,22 @@
 <body class="{% if page.bodyclass %}{{ page.bodyclass }}{% endif %}">
     <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
 
+    <div class="bg-light pt-5 mb-4 border-bottom">
+        <div class="container">
+            <ul class="nav nav-tabs" style="border-bottom: none">
+                <li class="nav-item">
+                    <a class="nav-link {% if page.url == '/' %}active{% endif %}" href="{{ '/' | relative_url }}">Example questions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if page.url == '/section-12' %}active{% endif %}" href="{{ '/section-12' | relative_url }}">Section 12 wizard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if page.url == '/section-12-chatbot' %}active{% endif %}" href="{{ '/section-12-chatbot' | relative_url }}">Section 12 chatbot</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     {{ content }}
 
     <script src="{{ '/vendor/jquery/jquery-3.5.1.min.js' | relative_url }}"></script>

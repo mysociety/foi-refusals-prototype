@@ -1,0 +1,13 @@
+.js-d-block {
+    display: none !important;
+}
+
+.js-enabled {
+    .js-d-none {
+        display: none !important;
+    }
+
+    .js-d-block {
+        display: block !important;
+    }
+}

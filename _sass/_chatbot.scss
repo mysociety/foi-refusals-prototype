@@ -1,0 +1,30 @@
+.js-refusals-chatbot {
+    max-width: 48rem;
+
+    .card-footer {
+        .progress {
+            min-width: 15em;
+            height: 0.75rem;
+            border-radius: 0.75rem;
+            box-shadow: inset 0 0 0 1px rgba(#000, 0.2);
+        }
+    }
+
+    .form-label,
+    .form-check-label {
+        font-size: 1.125rem;
+        line-height: 1.4;
+    }
+
+    .form-check {
+        margin-top: 0.2rem;
+    }
+
+    .form-check-input {
+        margin-top: 0.4rem;
+    }
+
+    .alert {
+        color: inherit;
+    }
+}
