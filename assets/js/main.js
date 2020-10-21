@@ -85,6 +85,27 @@ var showOrHidesuggestion = function ( $suggestion, show ) {
     }
 }
 
+var setUpRefusalsChatbot = function () {
+    var $form = $(this);
+
+    $form.on('submit', function (e) {
+        e.preventDefault();
+        var $current = $('.js-chatbot-question:visible');
+        var $next = $current.next('.js-chatbot-question');
+
+        if ( $next.length ) {
+            $current.addClass('d-none');
+            $next.removeClass('d-none');
+        }
+
+        if ( $current.is('[data-question-id="does-calculation-include-wrong-things"]') ) {
+            $('.js-chatbot-finale-hide').collapse('hide');
+            $('.js-chatbot-finale-show').collapse('show');
+        }
+    });
+};
+
 $(function () {
     $('.js-refusals-wizard').each(setUpRefusalsWizard);
+    $('.js-refusals-chatbot').each(setUpRefusalsChatbot);
 });

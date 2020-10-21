@@ -1,0 +1,27 @@
+<div class="card mb-4 js-chatbot-question {{ include.classes }}" data-question-id="{{ q.id | slugify }}">
+    <div class="card-body">
+        <fieldset class="form-group mb-0">
+            <legend class="form-label">{{ include.label }}</legend>
+          {% if include.hint %}
+            <p class="form-text text-muted">{{ include.hint }}</p>
+          {% endif %}
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="{{ include.id | slugify }}_yes" name="{{ include.id | slugify }}" value="yes">
+                <label class="form-check-label" for="{{ include.id | slugify }}_yes">Yes</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="{{ include.id | slugify }}_no" name="{{ include.id | slugify }}" value="no" disabled>
+                <label class="form-check-label" for="{{ include.id | slugify }}_no">No</label>
+            </div>
+        </fieldset>
+    </div>
+    <div class="card-footer text-muted">
+        <div class="d-flex align-items-center justify-content-center">
+            <button type="submit" value="next" class="btn btn-primary mr-auto">Next question</button>
+            <span class="mx-3">{{ include.remaining }} questions remaining</span>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: {{ include.progress }}%" aria-valuenow="{{ include.progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+</div>
